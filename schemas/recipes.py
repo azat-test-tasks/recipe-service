@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List, Optional, Dict
 
 from pydantic import BaseModel
 
@@ -6,8 +6,8 @@ from pydantic import BaseModel
 class RecipeCreateRequest(BaseModel):
     name: str
     description: str
-    ingredients: List[str]
-    steps: List[str]
+    ingredients: List[Dict[str, str | int]]
+    steps: List[Dict[str, str | int]]
 
     class Config:
         orm_mode = True
@@ -16,8 +16,8 @@ class RecipeCreateRequest(BaseModel):
 class RecipeUpdateRequest(BaseModel):
     name: Optional[str] = None
     description: Optional[str] = None
-    ingredients: Optional[List[str]] = None
-    steps: Optional[List[str]] = None
+    ingredients: Optional[List[Dict[str, str | int]]] = None
+    steps: Optional[List[Dict[str, str | int]]] = None
 
     class Config:
         orm_mode = True
@@ -27,8 +27,8 @@ class RecipeResponse(BaseModel):
     id: int
     name: str
     description: str
-    ingredients: List[str]
-    steps: List[str]
+    ingredients: List[Dict[str, str | int]]
+    steps: List[Dict[str, str | int]]
 
     class Config:
         orm_mode = True
