@@ -1,16 +1,16 @@
 """“initial”
 
-Revision ID: d6b9bb8fdf51
+Revision ID: ef915cc10859
 Revises: 
-Create Date: 2023-04-22 15:23:48.116093
+Create Date: 2023-04-22 20:46:48.917522
 
 """
 from alembic import op
 import sqlalchemy as sa
-
+from sqlalchemy.dialects import postgresql
 
 # revision identifiers, used by Alembic.
-revision = 'd6b9bb8fdf51'
+revision = 'ef915cc10859'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -22,8 +22,8 @@ def upgrade() -> None:
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(), nullable=True),
     sa.Column('description', sa.String(), nullable=True),
-    sa.Column('ingredients', sa.ARRAY(sa.String()), nullable=True),
-    sa.Column('steps', sa.ARRAY(sa.String()), nullable=True),
+    sa.Column('ingredients', postgresql.JSONB(astext_type=sa.Text()), nullable=True),
+    sa.Column('steps', postgresql.JSONB(astext_type=sa.Text()), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_recipes_id'), 'recipes', ['id'], unique=False)
