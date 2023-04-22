@@ -21,6 +21,7 @@ fileConfig(config.config_file_name)
 
 from core.config import settings
 from db.base import Base  # noqa
+from models.recipes import Recipe  # noqa
 
 target_metadata = Base.metadata
 
