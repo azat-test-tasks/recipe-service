@@ -1,11 +1,93 @@
 # Test your FastAPI endpoints
 
-GET http://127.0.0.1:8000/
+# Get all recipes
+
+GET http://127.0.0.1:8000/api/v1/recipe/
 Accept: application/json
 
 ###
 
-GET http://127.0.0.1:8000/hello/User
+# Get a recipe by id
+
+GET http://127.0.0.1:8000/api/v1/recipe/1/
 Accept: application/json
 
 ###
+
+# Create a recipe
+
+POST http://127.0.0.1:8000/api/v1/recipe/
+Content-Type: application/json
+
+{
+    "name": "Омлет",
+    "description": "Быстрый и простой завтрак",
+    "ingredients": [
+        {
+            "name": "Яйца",
+            "quantity": 3
+        },
+        {
+            "name": "Молоко",
+            "quantity": "50 мл"
+        },
+        {
+            "name": "Соль",
+            "quantity": "по вкусу"
+        },
+        {
+            "name": "Масло растительное",
+            "quantity": "2 ст. л."
+        }
+    ],
+    "steps": [
+        {
+            "description": "Смешать яйца, молоко и соль в миске"
+        },
+        {
+            "description": "Разогреть сковороду с маслом"
+        },
+        {
+            "description": "Вылить яичную смесь на сковороду и готовить до золотистой корочки"
+        }
+    ]
+}
+
+###
+
+# Update a recipe
+
+PUT http://127.0.0.1:8000/api/v1/recipe/1
+
+{
+    "name": "Омлет",
+    "description": "Быстрый и простой завтрак",
+    "ingredients": [
+        {
+            "name": "Яйца",
+            "quantity": 3
+        },
+        {
+            "name": "Молоко",
+            "quantity": "30 мл"
+        },
+        {
+            "name": "Масло растительное",
+            "quantity": "1 ст. л."
+        }
+    ],
+    "steps": [
+        {
+            "description": "Смешать яйца, молоко и соль в миске"
+        },
+        {
+            "description": "Вылить яичную смесь на сковороду и готовить до золотистой корочки"
+        }
+    ]
+}
+
+###
+
+# Delete a recipe
+
+DELETE http://localhost:8000/api/v1/recipe/1
