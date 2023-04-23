@@ -1,7 +1,9 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.dialects.postgresql import JSONB
+from sqlalchemy.orm import relationship
 
 from db.base import Base
+from models.users import User
 
 
 class Recipe(Base):
@@ -11,4 +13,17 @@ class Recipe(Base):
     name = Column(String, index=True)
     description = Column(String)
     ingredients = Column(JSONB)
-    steps = Column(JSONB)
+    owner_id = Column(Integer, ForeignKey(User.id, ondelete="CASCADE"), )
+
+    owner = relationship("User", back_populates="recipes")
+    steps = relationship("Step", backref="recipe_steps")
+
+
+class Step(Base):
+    __tablename__ = "steps"
+
+    id = Column(Integer, primary_key=True, index=True)
+    description = Column(String)
+    time = Column(Integer)
+
+    recipe_id = Column(Integer, ForeignKey("recipes.id"))

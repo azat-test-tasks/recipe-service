@@ -3,32 +3,40 @@ from typing import List, Optional, Dict
 from pydantic import BaseModel
 
 
-class RecipeCreateRequest(BaseModel):
+class StepBase(BaseModel):
+    description: str
+    time: int
+
+
+class RecipeBase(BaseModel):
     name: str
     description: str
     ingredients: List[Dict[str, str | int]]
-    steps: List[Dict[str, str | int]]
+    steps: List[StepBase]
 
-    class Config:
-        orm_mode = True
+
+class RecipeCreateRequest(RecipeBase):
+    pass
 
 
 class RecipeUpdateRequest(BaseModel):
     name: Optional[str] = None
     description: Optional[str] = None
     ingredients: Optional[List[Dict[str, str | int]]] = None
-    steps: Optional[List[Dict[str, str | int]]] = None
+    steps: Optional[List[StepBase]] = None
+
+
+class StepResponse(StepBase):
+    id: int
 
     class Config:
         orm_mode = True
 
 
-class RecipeResponse(BaseModel):
+class RecipeResponse(RecipeBase):
     id: int
-    name: str
-    description: str
-    ingredients: List[Dict[str, str | int]]
-    steps: List[Dict[str, str | int]]
+    owner_id: int
+    steps: List[StepResponse]
 
     class Config:
         orm_mode = True
