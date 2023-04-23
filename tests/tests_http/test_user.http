@@ -1,0 +1,31 @@
+# Test your FastAPI endpoints
+
+# Get all users
+
+GET http://127.0.0.1:8000/api/v1/users/
+Accept: application/json
+Authorization: <bearer token>
+
+###
+
+# Get a user by id
+
+GET http://127.0.0.1:8000/api/v1/users/1/
+Accept: application/json
+Authorization: <bearer token>
+
+###
+
+# Delete a user by id
+
+DELETE http://127.0.0.1:8000/api/v1/recipe/1
+Authorization: <bearer token>
+
+
+###
+
+# Get a current user
+
+GET http://127.0.0.1:8000/api/v1/users/me
+Accept: application/json
+Authorization: <bearer token>
