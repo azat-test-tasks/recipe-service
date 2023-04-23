@@ -18,39 +18,39 @@ Accept: application/json
 
 POST http://127.0.0.1:8000/api/v1/recipe/
 Content-Type: application/json
+Authorization: <bearer token>
 
 {
-    "name": "Омлет",
-    "description": "Быстрый и простой завтрак",
-    "ingredients": [
-        {
-            "name": "Яйца",
-            "quantity": 3
-        },
-        {
-            "name": "Молоко",
-            "quantity": "50 мл"
-        },
-        {
-            "name": "Соль",
-            "quantity": "по вкусу"
-        },
-        {
-            "name": "Масло растительное",
-            "quantity": "2 ст. л."
-        }
-    ],
-    "steps": [
-        {
-            "description": "Смешать яйца, молоко и соль в миске"
-        },
-        {
-            "description": "Разогреть сковороду с маслом"
-        },
-        {
-            "description": "Вылить яичную смесь на сковороду и готовить до золотистой корочки"
-        }
-    ]
+  "name": "Омлет",
+  "description": "Быстрый и простой завтрак",
+  "ingredients": [
+    {
+      "name": "Яйца",
+      "quantity": 3
+    },
+    {
+      "name": "Молоко",
+      "quantity": "50 мл"
+    },
+    {
+      "name": "Соль",
+      "quantity": "по вкусу"
+    },
+    {
+      "name": "Масло растительное",
+      "quantity": "2 ст. л."
+    }
+  ],
+  "steps": [
+    {
+      "description": "Смешать яйца, молоко и соль в миске",
+      "time": 5
+    },
+    {
+      "description": "Вылить яичную смесь на сковороду и готовить до золотистой корочки",
+      "time": 10
+    }
+  ]
 }
 
 ###
@@ -58,14 +58,13 @@ Content-Type: application/json
 # Update a recipe
 
 PUT http://127.0.0.1:8000/api/v1/recipe/1
+Authorization: <bearer token>
 
 {
-    "name": "Омлет",
-    "description": "Быстрый и простой завтрак",
     "ingredients": [
         {
             "name": "Яйца",
-            "quantity": 3
+            "quantity": 2
         },
         {
             "name": "Молоко",
@@ -76,14 +75,18 @@ PUT http://127.0.0.1:8000/api/v1/recipe/1
             "quantity": "1 ст. л."
         }
     ],
-    "steps": [
-        {
-            "description": "Смешать яйца, молоко и соль в миске"
-        },
-        {
-            "description": "Вылить яичную смесь на сковороду и готовить до золотистой корочки"
-        }
-    ]
+  "steps": [
+    {
+      "description": "Смешать яйца, молоко и соль в миске",
+      "time": 10,
+      "id": 1
+    },
+    {
+      "description": "Вылить яичную смесь на сковороду и готовить до золотистой корочки",
+      "time": 15,
+      "id": 2
+    }
+  ]
 }
 
 ###
@@ -91,3 +94,11 @@ PUT http://127.0.0.1:8000/api/v1/recipe/1
 # Delete a recipe
 
 DELETE http://localhost:8000/api/v1/recipe/1
+Authorization: <bearer token>
+
+
+###
+
+# Search recipes by ingredients and sort by time
+
+GET http://localhost:8000/api/v1/recipe?skip=0&limit=20&ingredients=tomatoes,onions&sort_by_time=true
