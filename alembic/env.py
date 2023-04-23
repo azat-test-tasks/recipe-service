@@ -22,6 +22,10 @@ fileConfig(config.config_file_name)
 from core.config import settings
 from db.base import Base  # noqa
 from models.recipes import Recipe  # noqa
+from models.recipes import Step  # noqa
+from models.users import User  # noqa
+from models.ratings import Rating  # noqa
+from models.images import Image  # noqa
 
 target_metadata = Base.metadata
 

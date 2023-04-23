@@ -14,6 +14,7 @@ class User(Base):
     password = Column(String(255))
 
     recipes = relationship("Recipe", back_populates="owner")
+    ratings = relationship("Rating", back_populates="user")
 
     def __init__(self, name, email, password, *args, **kwargs):
         self.name = name

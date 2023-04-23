@@ -1,14 +1,34 @@
 from typing import List
 
 from fastapi import APIRouter, Depends, status, Response, HTTPException
+from jose import jwt, JWTError
 from sqlalchemy.orm import Session
 
 from api import deps
-from core.security import get_current_user, verify_email_exist
+from core.config import settings
+from core.security import oauth2_scheme
+from models import users as models
 from schemas import users as schema
+from schemas.auth import TokenData
 from services import users as services
 
 router = APIRouter()
+
+
+@router.get("/me", response_model=schema.DisplayUser)
+async def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(deps.get_db)):
+    try:
+        payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
+        email: str = payload.get("sub")
+        if email is None:
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Could not validate credentials")
+        token_data = TokenData(email=email)
+    except JWTError:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Could not validate credentials")
+    user = db.query(models.User).filter(models.User.email == token_data.email).first()
+    if not user:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Could not validate credentials")
+    return user
 
 
 @router.get('/', response_model=List[schema.DisplayUser])

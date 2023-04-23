@@ -17,6 +17,8 @@ class Recipe(Base):
 
     owner = relationship("User", back_populates="recipes")
     steps = relationship("Step", backref="recipe_steps")
+    ratings = relationship("Rating", back_populates="recipe")
+    images = relationship("Image", back_populates="recipe")
 
 
 class Step(Base):
