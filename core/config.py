@@ -36,6 +36,11 @@ class Settings(BaseSettings):
     DB_TEST_NAME = os.getenv("DB_TEST_NAME", "tests")
     DATABASE_TEST_URL = f"postgresql://{DB_TEST_USER}:{DB_TEST_PASS}@{DB_TEST_HOST}:{DB_TEST_PORT}/{DB_TEST_NAME}"
 
+    # JWT configuration
+    SECRET_KEY: str = os.getenv("SECRET_KEY")
+    ALGORITHM: str = os.getenv("ALGORITHM", "HS256")
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", 3600)
+
     class Config:
         env_file: Optional[DotenvType] = "./.env"
 
