@@ -22,7 +22,9 @@ async def all_users(database) -> List[User]:
 async def get_user_by_id(user_id, database) -> Optional[User]:
     user_info = database.query(User).get(user_id)
     if not user_info:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Data Not Found !")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Data Not Found !"
+        )
     return user_info
 
 

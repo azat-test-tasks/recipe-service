@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, File, UploadFile, HTTPException
+from fastapi import APIRouter, Depends, File, HTTPException, UploadFile
 from sqlalchemy.orm import Session
 from sqlalchemy.sql.functions import current_user
 from starlette.responses import FileResponse
@@ -28,7 +28,7 @@ async def upload_recipe_image(
         raise HTTPException(status_code=403, detail="Forbidden")
 
     # Check if image type is valid
-    if not image_type in schema.ImageType:
+    if image_type not in schema.ImageType:
         raise HTTPException(status_code=400, detail="Invalid image type")
 
     # Save the image to disk
@@ -60,13 +60,16 @@ async def get_recipe_image(
     if not recipe:
         raise HTTPException(status_code=404, detail="Recipe not found")
 
-    # Check if image type is valid
-    if not image_type in schema.ImageType:
+    if image_type not in schema.ImageType:
         raise HTTPException(status_code=400, detail="Invalid image type")
 
-    db_image = db.query(models.Image).filter(
-        models.Image.recipe_id == recipe_id, models.Image.image_type == image_type
-    ).first()
+    db_image = (
+        db.query(models.Image)
+        .filter(
+            models.Image.recipe_id == recipe_id, models.Image.image_type == image_type
+        )
+        .first()
+    )
     if not db_image:
         raise HTTPException(status_code=404, detail="Image not found")
 

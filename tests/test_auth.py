@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 
 from api import deps
 from main import app
-from schemas.users import UserCreate, User
+from schemas.users import User, UserCreate
 
 client = TestClient(app)
 
@@ -21,13 +21,17 @@ def test_login(test_db: Session):
     test_db.commit()
 
     # Проверяем успешную аутентификацию
-    response = client.post("/login", data={"username": "test@example.com", "password": "password"})
+    response = client.post(
+        "/login", data={"username": "test@example.com", "password": "password"}
+    )
     assert response.status_code == 200
     assert "access_token" in response.json()
     assert response.json()["token_type"] == "bearer"
 
     # Проверяем неудачную аутентификацию
-    response = client.post("/login", data={"username": "test@example.com", "password": "wrong_password"})
+    response = client.post(
+        "/login", data={"username": "test@example.com", "password": "wrong_password"}
+    )
     assert response.status_code == 400
     assert "detail" in response.json()
 

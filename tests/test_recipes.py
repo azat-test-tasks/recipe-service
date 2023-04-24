@@ -2,8 +2,8 @@ import pytest
 from httpx import AsyncClient
 from sqlalchemy.orm import Session
 
-from models.users import User
 from models.recipes import Recipe
+from models.users import User
 from services.recipes import create_recipe
 
 pytestmark = pytest.mark.asyncio
@@ -15,33 +15,18 @@ async def test_create_recipe(client: AsyncClient, db: Session, test_user: User):
         "name": "Омлет",
         "description": "Быстрый и простой завтрак",
         "ingredients": [
-            {
-                "name": "Яйца",
-                "quantity": 3
-            },
-            {
-                "name": "Молоко",
-                "quantity": "50 мл"
-            },
-            {
-                "name": "Соль",
-                "quantity": "по вкусу"
-            },
-            {
-                "name": "Масло растительное",
-                "quantity": "2 ст. л."
-            }
+            {"name": "Яйца", "quantity": 3},
+            {"name": "Молоко", "quantity": "50 мл"},
+            {"name": "Соль", "quantity": "по вкусу"},
+            {"name": "Масло растительное", "quantity": "2 ст. л."},
         ],
         "steps": [
-            {
-                "description": "Смешать яйца, молоко и соль в миске",
-                "time": 5
-            },
+            {"description": "Смешать яйца, молоко и соль в миске", "time": 5},
             {
                 "description": "Вылить яичную смесь на сковороду и готовить до золотистой корочки",
-                "time": 10
-            }
-        ]
+                "time": 10,
+            },
+        ],
     }
     # Создаем рецепт в базе данных
     created_recipe = await create_recipe(db, recipe_data, test_user)
@@ -64,7 +49,9 @@ async def test_get_recipe(client: AsyncClient, db: Session, test_recipe: Recipe)
     assert response.json() == test_recipe
 
 
-async def test_update_recipe(client: AsyncClient, db: Session, test_recipe: Recipe, test_user: User):
+async def test_update_recipe(
+    client: AsyncClient, db: Session, test_recipe: Recipe, test_user: User
+):
     updated_recipe_data = {"title": "New Test Recipe Title"}
     response = await client.put(f"/recipes/{test_recipe.id}", json=updated_recipe_data)
     assert response.status_code == 200

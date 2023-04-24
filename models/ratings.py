@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, ForeignKey
+from sqlalchemy import Column, ForeignKey, Integer
 from sqlalchemy.orm import relationship
 
 from db.base import Base
@@ -14,4 +14,3 @@ class Rating(Base):
 
     recipe = relationship("Recipe", back_populates="ratings")
     user = relationship("User", back_populates="ratings")
-    images = relationship("Image", back_populates="recipe")

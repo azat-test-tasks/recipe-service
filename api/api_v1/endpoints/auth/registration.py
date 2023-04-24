@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 
 from api import deps
 from core.security import verify_email_exist
-from schemas.users import UserCreate, User
+from schemas.users import User, UserCreate
 from services.users import new_user_register
 
 router = APIRouter()
@@ -13,9 +13,9 @@ router = APIRouter()
 
 @router.post("/registration", response_model=User)
 async def create_user(
-        *,
-        db: Session = Depends(deps.get_db),
-        user_in: UserCreate,
+    *,
+    db: Session = Depends(deps.get_db),
+    user_in: UserCreate,
 ) -> Any:
     """
     Create new user.

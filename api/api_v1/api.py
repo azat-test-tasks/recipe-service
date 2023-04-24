@@ -1,10 +1,10 @@
 from fastapi import APIRouter
 
 from api.api_v1.endpoints.auth import login, registration
+from api.api_v1.endpoints.images import image
+from api.api_v1.endpoints.ratings import rating
 from api.api_v1.endpoints.recipes import recipe
 from api.api_v1.endpoints.users import user
-from api.api_v1.endpoints.ratings import rating
-from api.api_v1.endpoints.images import image
 
 api_router = APIRouter()
 

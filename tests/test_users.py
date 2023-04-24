@@ -22,7 +22,9 @@ def test_get_all_users(client: TestClient, users: list[models.User], token: str)
 
 
 def test_get_user_by_id(client: TestClient, user: models.User, token: str):
-    response = client.get(f"/users/{user.id}", headers={"Authorization": f"Bearer {token}"})
+    response = client.get(
+        f"/users/{user.id}", headers={"Authorization": f"Bearer {token}"}
+    )
     assert response.status_code == 200
     data = response.json()
     assert data["id"] == user.id
@@ -30,8 +32,12 @@ def test_get_user_by_id(client: TestClient, user: models.User, token: str):
 
 
 def test_delete_user_by_id(client: TestClient, user: models.User, token: str):
-    response = client.delete(f"/users/{user.id}", headers={"Authorization": f"Bearer {token}"})
+    response = client.delete(
+        f"/users/{user.id}", headers={"Authorization": f"Bearer {token}"}
+    )
     assert response.status_code == 204
 
-    response = client.get(f"/users/{user.id}", headers={"Authorization": f"Bearer {token}"})
+    response = client.get(
+        f"/users/{user.id}", headers={"Authorization": f"Bearer {token}"}
+    )
     assert response.status_code == 404

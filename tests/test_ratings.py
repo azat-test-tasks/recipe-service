@@ -17,8 +17,11 @@ def test_create_rating_for_recipe(db: Session):
 
         # Create a rating
         data = {"value": 3}
-        response = client.post("/1/ratings", json=data,
-                               headers={"Authorization": f"Bearer {response.json()['access_token']}"})
+        response = client.post(
+            "/1/ratings",
+            json=data,
+            headers={"Authorization": f"Bearer {response.json()['access_token']}"},
+        )
         assert response.status_code == 200
 
         # Check that the rating was created
@@ -39,14 +42,20 @@ def test_create_rating_for_recipe_already_rated(db: Session):
 
         # Create an initial rating
         data = {"value": 3}
-        response = client.post("/1/ratings", json=data,
-                               headers={"Authorization": f"Bearer {response.json()['access_token']}"})
+        response = client.post(
+            "/1/ratings",
+            json=data,
+            headers={"Authorization": f"Bearer {response.json()['access_token']}"},
+        )
         assert response.status_code == 200
 
         # Attempt to create another rating
         data = {"value": 4}
-        response = client.post("/1/ratings", json=data,
-                               headers={"Authorization": f"Bearer {response.json()['access_token']}"})
+        response = client.post(
+            "/1/ratings",
+            json=data,
+            headers={"Authorization": f"Bearer {response.json()['access_token']}"},
+        )
         assert response.status_code == 400
 
 
